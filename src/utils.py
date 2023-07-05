@@ -1,6 +1,7 @@
-from flask import send_file
+import torch
+from diffusers import EulerDiscreteScheduler, StableDiffusionPipeline
 
-from src.consts import KIM_TOKEN, PROMPT
+from src.consts import KIM_TOKEN, PROMPT, model_repo, ti_vector_path
 
 
 def consctruct_prompt(additional_prompt: str) -> str:
@@ -8,11 +9,10 @@ def consctruct_prompt(additional_prompt: str) -> str:
     return prompt
 
 
-from io import StringIO
-
-
-def serve_pil_image(pil_img):
-    img_io = StringIO()
-    pil_img.save(img_io, "JPEG", quality=70)
-    img_io.seek(0)
-    return send_file(img_io, mimetype="image/jpeg")
+def get_model():
+    pipe = StableDiffusionPipeline.from_pretrained(model_repo, safety_checker=None)
+    pipe.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
+    pipe.load_textual_inversion(ti_vector_path, token=KIM_TOKEN)
+    if torch.cuda.is_available():
+        pipe.to("cuda")
+    return pipe

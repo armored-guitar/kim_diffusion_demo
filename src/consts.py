@@ -17,5 +17,5 @@ NEGATIVE_PROMPT = (
 )
 
 # Models' path consts
-model_path = "/workspace/project/models/Realistic_Vision_V3.0_VAE/Realistic_Vision_V3.0.safetensors"
-ti_vector_path = "/workspace/project/models/koh_kimkardashian.pt"
+ti_vector_path = "./models/koh_kimkardashian.pt"
+model_repo = "SG161222/Realistic_Vision_V3.0_VAE"

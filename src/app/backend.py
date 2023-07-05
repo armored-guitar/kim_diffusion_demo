@@ -1,27 +1,17 @@
+import io
 import json
 
-import torch
 import yaml
-from diffusers import EulerDiscreteScheduler, StableDiffusionPipeline
-from flask import Flask, request, send_file
+from flask import Flask, jsonify, request, send_file
 
 from src import consts
-from src.utils import consctruct_prompt, serve_pil_image
+from src.utils import consctruct_prompt, get_model
 
 app = Flask(__name__)
-pipe = StableDiffusionPipeline.from_ckpt(consts.model_path, safety_checker=None)
-pipe.scheduler = EulerDiscreteScheduler.from_config(pipe.scheduler.config)
-pipe.load_textual_inversion(consts.ti_vector_path, token=consts.KIM_TOKEN)
-if torch.cuda.is_available():
-    pipe.to("cuda")
+pipe = get_model()
 
 
-@app.route("/generate_image")
-def generate_image():
-    content = json.load(request.files["json"])
-    additional_prompt = content["prompt"]
-    num_steps = int(content["num_steps"])
-    cfg_scale = float(content["cfg_scale"])
+def run_inference(additional_prompt: str, num_steps: int, cfg_scale: float):
     prompt = consctruct_prompt(additional_prompt)
     image = pipe(
         prompt=prompt,
@@ -29,7 +19,24 @@ def generate_image():
         num_inference_steps=num_steps,
         guidance_scale=cfg_scale,
     ).images[0]
-    return serve_pil_image(image)
+    img_data = io.BytesIO()
+    image.save(img_data, "PNG")
+    img_data.seek(0)
+    return img_data
+
+
+@app.route("/generate_image")
+def generate_image():
+    content = json.load(request.files["json"])
+    img_data = run_inference(content["prompt"], content["num_steps"], content["cfg"])
+    return send_file(img_data, mimetype="image/png")
+
+
+@app.route("/healthy")
+def get_health_status():
+    resp = jsonify(health="healthy")
+    resp.status_code = 200
+    return resp
 
 
 if __name__ == "__main__":
@@ -40,6 +47,4 @@ if __name__ == "__main__":
         "0.0.0.0",
         port=yaml_config["flask"]["port"],
         debug=False,
-        processes=1,
-        threaded=False,
     )
