@@ -1,0 +1,18 @@
+FROM python:3.8.16
+
+
+# Set working directory
+WORKDIR /workspace/project
+
+# Switch to bash shell
+SHELL ["/bin/bash", "-c"]
+
+
+# Install requirements
+COPY ./src ./src
+COPY ./config.yaml ./
+COPY ./requirements_frontend.txt ./
+RUN pip install -r ./requirements_frontend.txt
+
+
+ENTRYPOINT cd /workspace/project/ && PYTHONPATH=. streamlit run src/app/frontend.py
