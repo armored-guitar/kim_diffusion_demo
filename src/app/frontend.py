@@ -5,8 +5,6 @@ import requests
 import streamlit as st
 import yaml
 
-address = 10
-
 
 @st.cache_data
 def get_config():
@@ -26,8 +24,10 @@ def main():
     config = get_config()
     address = f"http://{config['flask']['ip']}:{config['flask']['port']}"
     st.title("Stable Diffusion Kim Demo")
-    st.write("Please enter your prompt and then press submit button. After viewing your results "
-             "please press restart and then submit new(or same) request to get new results")
+    st.write(
+        "Please enter your prompt and then press submit button. After viewing your results "
+        "please press restart and then submit new(or same) request to get new results"
+    )
     init_state()
     with st.sidebar:
         with st.form("inference_config"):

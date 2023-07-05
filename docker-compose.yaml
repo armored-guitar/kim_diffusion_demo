@@ -6,7 +6,7 @@ services:
     build:
       context: ./
       dockerfile: ./DockerFiles/Dockerfile_BackEnd
-    image: backend:latest
+    image: armoredguitar/diffusion_demo:latest
     expose:
       - "5000"
     healthcheck:
@@ -27,7 +27,7 @@ services:
 
   frontend:
     container_name: frontend
-    hostname: frontend
+    hostname: armoredguitar/diffusion_app:latest
     depends_on:
       backend:
         condition: service_healthy
