@@ -14,5 +14,4 @@ docker compose up -d
 ```
 In both cases web app will be available under <your-ip>:8501
 
-Approximate VRAM usage is 6GB.
-Also should work EXTREMELY slowly with cpu. Checked cpu work with mac os.
+Approximate VRAM usage is 6GB. Docker image is build only supporting gpu usage.
