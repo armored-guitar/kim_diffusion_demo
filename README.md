@@ -12,6 +12,6 @@ or use prebuilt images by simply running
 ```sh
 docker compose up -d 
 ```
-In both cases web app will be available under <your-ip>:8501
+In both cases web app will be available under localhost:8501
 
 Approximate VRAM usage is 6GB. Docker image is build only supporting gpu usage.
