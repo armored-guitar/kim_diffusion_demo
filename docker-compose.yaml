@@ -27,14 +27,14 @@ services:
 
   frontend:
     container_name: frontend
-    hostname: armoredguitar/diffusion_app:latest
+    hostname: frontend
     depends_on:
       backend:
         condition: service_healthy
     build:
       context: ./
       dockerfile: ./DockerFiles/Dockerfile_FrontEnd
-    image: streamlit:latest
+    image: armoredguitar/diffusion_app:latest
     ports:
       - "8501:8501"
     deploy:
