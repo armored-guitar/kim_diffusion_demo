@@ -2,6 +2,7 @@
 ## What used
 There are two implemented servers: frontend and backend. Frontend service uses streamlit to develop an web app. Backend uses flask and diffusers to generate images. For personalized Kim generation I used [text inversion](https://arxiv.org/abs/2208.01618) technique. Token was taken from [civitai.com](https://civitai.com/models/23630/kim-kardashian). Several  photorealistic checkpoints of stable diffusion were used but best results are get with [this one](https://civitai.com/models/4201?modelVersionId=105674). Here is an example of a generation
 ![Example_image](https://github.com/armored-guitar/kim_diffusion_demo/blob/0bbc775987484eb2ab5985d63eb3c5603c553c4b/imgs/0_realistic_vision.png?raw=true)  
+You can check other examples under imgs/ folder
 
 ## Deployment
 you can either build image from scratch using:
