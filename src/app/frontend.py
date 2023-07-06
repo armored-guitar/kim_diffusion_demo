@@ -32,8 +32,8 @@ def main():
     with st.sidebar:
         with st.form("inference_config"):
             st.text_input(
-                'Enter your prompt. Please dont use "Kim Kardashian" or connected phrases to prevent model from failing.'
-                "Also don`t include extra tags because they`re already included. You can describe style of cloths "
+                'Enter your prompt. Please do not use "Kim Kardashian" or connected phrases to prevent model from failing.'
+                "Also don't include extra tags because they're already included. You can describe style of cloths "
                 "and background, pose is already predefined",
                 value="",
                 key="prompt",
