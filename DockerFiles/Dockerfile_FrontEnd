@@ -15,4 +15,4 @@ COPY ./requirements_frontend.txt ./
 RUN pip install -r ./requirements_frontend.txt
 
 
-ENTRYPOINT cd /workspace/project/ && PYTHONPATH=. streamlit run src/app/frontend.py
+ENTRYPOINT cd /workspace/project/ && PYTHONPATH=. streamlit run src/app/frontend.py --server.headless true --server.fileWatcherType none --browser.gatherUsageStats false
